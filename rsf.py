@@ -15,6 +15,17 @@ screen = pygame.display.set_mode((width, height))
 with open('/home/herohunter/Everything/Coding/python projects/custom image filetype/data.rsf', 'r') as file:
     rb=file.read()
 
+# encode data and write it to encoded.rsf
+encodedbinary=Encoder.encode(rb)
+with open('/home/herohunter/Everything/Coding/python projects/custom image filetype/encoded.rsf', 'w') as file:
+    file.write(encodedbinary)
+
+# decode data and write it to recoded.rsf
+rb=Encoder.decode(encodedbinary)
+
+with open('/home/herohunter/Everything/Coding/python projects/custom image filetype/recoded.rsf', 'w') as file:
+    file.write(rb)
+
 for i in range(len(rb)):
     if i%8==7:
         binary=int(rb[i-7]+rb[i-6]+rb[i-5]+rb[i-4]+rb[i-3]+rb[i-2]+rb[i-1]+rb[i], 2)
