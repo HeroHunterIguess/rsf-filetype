@@ -1,45 +1,49 @@
-class Encoder:
+class Compression:
     # split up long numbers
     @staticmethod
     def longNumSplitter(count):
-        longstr=""
+        long_str=""
 
         for char in str(count):
-            longstr+=char
+            long_str+=char
             count=str(count)[1:]
 
             if len(count)>0:
-                longstr+="/"
+                long_str+="/"
 
-        return longstr
-    
+        return long_str
+
+    # update the current number being looked at
     @staticmethod
-    def updateNum(curNum):
-        if curNum==1:
+    def updateNum(current_number):
+        if current_number==1:
             return 0
-        elif curNum==0:
+        elif current_number==0:
             return 1
     
     # encode input
     @staticmethod
-    def encode(binaryinput):
-        numcounter=1
-        final=binaryinput[0]
+    def encode(binary_input):
+        counter=1
+        # setting what it starts w/
+        final=binary_input[0]
+        binary_input=binary_input[1:]
 
-        for i in range(1,len(binaryinput)):
+        for i in range(1,len(binary_input)):
 
-            if binaryinput[i]==binaryinput[i-1]:
-                numcounter+=1
+            if binary_input[i]==binary_input[i-1]:
+                counter+=1
             else: 
-                if numcounter<9:
-                    final+=str(numcounter)
-                    numcounter=1
+                if counter<9:
+                    final+=str(counter)
+                    counter=1
                 else: 
-                    final+=Encoder.longNumSplitter(numcounter)
-                    numcounter=1
+                    final+=Compression.longNumSplitter(counter)
+                    counter=1
         
-        final+=Encoder.longNumSplitter(numcounter)
-        numcounter=1
+        # this may need to be reimplimented, just commented out for testing rng
+        #final+=Compression.longNumSplitter(counter)
+        #counter=1
 
         # clean and return output
         if final[0]=="0":
@@ -47,35 +51,37 @@ class Encoder:
         return final
 
     # take in input and decode it 
-    @staticmethod
-    def decode(binaryinput):
-        final=""
-        currentNum=int(binaryinput[0])
 
-        for i in range(1,len(binaryinput)):
+    # decoder is currently bugged and not fully functional
+    @staticmethod
+    def decode(binary_input):
+        final=""
+        current_num=int(binary_input[0])
+
+        for i in range(len(binary_input)):
             # need to also check if next char is / without overflow
-            if not (i+1)==len(binaryinput):
-                if binaryinput[i]!="/" and binaryinput[i-1]!="/" and binaryinput[i+1]!="/":
-                    # add that amount of the currentNum to final
-                    for n in range(int(binaryinput[i])):
-                        final+=str(currentNum)
-                elif binaryinput[i]=="/":
+            if not (i+1)==len(binary_input):
+                if binary_input[i]!="/" and binary_input[i-1]!="/" and binary_input[i+1]!="/":
+                    # add that amount of the current_num to final
+                    for n in range(int(binary_input[i])):
+                        final+=str(current_num)
+                elif binary_input[i]=="/":
                     # parse longer numbers
-                    amount=binaryinput[i-1]+binaryinput[i+1]
+                    amount=binary_input[i-1]+binary_input[i+1]
 
                     for j in range(int(amount)):
-                        final+=str(currentNum)
+                        final+=str(current_num)
                 else:
                     continue
             
             # update current number
-            currentNum=Encoder.updateNum(currentNum)
+            current_num=Compression.updateNum(current_num)
         
         # update and restore final number
-        currentNum=Encoder.updateNum(currentNum)
+        current_num=Compression.updateNum(current_num)
         
-        for i in range(int(binaryinput[i])):
-            final+=str(currentNum)
+        for i in range(int(binary_input[i])):
+            final+=str(current_num)
         
         # clean and return final
         final=final[1:]
