@@ -1,5 +1,5 @@
 import pygame
-from encoder import Encoder
+from encoder import Compression
 
 # default var setup
 width=100
@@ -16,12 +16,12 @@ with open('/home/herohunter/Everything/Coding/python projects/custom image filet
     rb=file.read()
 
 # encode data and write it to encoded.rsf
-encodedbinary=Encoder.encode(rb)
+encodedbinary=Compression.encode(rb)
 with open('/home/herohunter/Everything/Coding/python projects/custom image filetype/encoded.rsf', 'w') as file:
     file.write(encodedbinary)
 
 # decode data and write it to recoded.rsf
-rb=Encoder.decode(encodedbinary)
+rb=Compression.decode(encodedbinary)
 
 with open('/home/herohunter/Everything/Coding/python projects/custom image filetype/recoded.rsf', 'w') as file:
     file.write(rb)
