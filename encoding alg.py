@@ -51,11 +51,10 @@ class Compression:
         return final
 
     # take in input and decode it 
-
-    # decoder is currently bugged and not fully functional
     @staticmethod
     def decode(binary_input):
         final=""
+        slashIndices=[]
         current_num=int(binary_input[0])
 
         for i in range(len(binary_input)):
@@ -64,13 +63,13 @@ class Compression:
                 if binary_input[i]!="/" and binary_input[i-1]!="/" and binary_input[i+1]!="/":
                     # add that amount of the current_num to final
                     for n in range(int(binary_input[i])):
-                        final+=str(current_num)
+                        final+=str(current_num)3
                 elif binary_input[i]=="/":
-                    # parse longer numbers
-                    amount=binary_input[i-1]+binary_input[i+1]
-
-                    for j in range(int(amount)):
-                        final+=str(current_num)
+                    slashIndices.append(i)
+                    
+                
+                    #for j in range(int(amount)):
+                    #    final+=str(current_num)
                 else:
                     continue
             
