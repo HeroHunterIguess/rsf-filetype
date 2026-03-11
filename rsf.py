@@ -37,12 +37,14 @@ height=datalist[1]
 screen=pygame.display.set_mode((width, height))
 
 iteration=0
-# run window and render data
+
 while running:
+    # input check loop
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             running=False
-    
+
+    # rendering pixels in rows; only rendered on the first frame after the window opens
     if iteration==0:
         layerHeight=-1
         for i in range((len(datalist)-2)//3):
