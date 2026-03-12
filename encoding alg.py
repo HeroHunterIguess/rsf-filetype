@@ -61,6 +61,12 @@ class Compression:
             # need to also check if next char is / without overflow
             if not (i+1)==len(binary_input):
                 if binary_input[i]!="/" and binary_input[i-1]!="/" and binary_input[i+1]!="/":
+                    # compile any previous longnums
+                    if len(slashIndicies)>=1:
+                        # prase a number based on the indicies of slashes
+                        for index in slashIndicies:
+                            pass
+                    
                     # add that amount of the current_num to final
                     for n in range(int(binary_input[i])):
                         final+=str(current_num)3
