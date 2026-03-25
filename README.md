@@ -4,3 +4,5 @@
 Yes, right now this code is bad!!!!
 I know its bad!!!!
 I will fix it later!!!!!!!
+
+This is unfinished and not being actively worked on.
