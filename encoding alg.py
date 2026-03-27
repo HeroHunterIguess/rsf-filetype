@@ -55,27 +55,36 @@ class Compression:
     def decode(binary_input):
         final=""
         slashIndices=[]
+        finished=False
         current_num=int(binary_input[0])
 
         for i in range(len(binary_input)):
             # need to also check if next char is / without overflow
             if not (i+1)==len(binary_input):
-                if binary_input[i]!="/" and binary_input[i-1]!="/" and binary_input[i+1]!="/":
-                    # compile any previous longnums
-                    if len(slashIndicies)>=1:
-                        # prase a number based on the indicies of slashes
-                        for index in slashIndicies:
-                            pass
-                    
+
+                if finished:
+                    # finalize longer numbers if its done
+                    amount=binary_input[slashIndices[0]-1]
+                    for f in range(len(slashIndices)):
+                        pass
+                        # this needs to go through each slashIndex and add binaryInput[i+1] to the amount
+                        # idk if this works rn
+                        amount+=binary_input[slashIndices[f]] 
+
+                    for j in range(int(amount)):
+                        final+=str(current_num)
+
+                elif binary_input[i]!="/" and binary_input[i-1]!="/" and binary_input[i+1]!="/":
                     # add that amount of the current_num to final
                     for n in range(int(binary_input[i])):
-                        final+=str(current_num)3
+                        final+=str(current_num)
                 elif binary_input[i]=="/":
+                    # parse longer numbers
                     slashIndices.append(i)
-                    
-                
-                    #for j in range(int(amount)):
-                    #    final+=str(current_num)
+                    if binary_input[i+2]=="/":
+                        slashIndices.append(i)
+                    elif binary_input[i+1]!="/":
+                        finished=True
                 else:
                     continue
             
